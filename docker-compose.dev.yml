@@ -1,7 +1,24 @@
 services:
   pretix:
     ports:
-      - "127.0.0.1:80:80"
+      - "80:80"
       - "443:443"
     volumes:
-      - ./.docker/volumes/data:/pretix/data
+      - ./.docker/volumes/data:/data
+    depends_on:
+      - mailpit
+  mailpit:
+    container_name: mailpit
+    image: axllent/mailpit
+    volumes:
+      - ./.docker/volumes/mailpit:/data
+    ports:
+      - 8025:8025
+      - 1025:1025
+    environment:
+      MP_MAX_MESSAGES: 5000
+      MP_DATABASE: /data/mailpit.db
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+    networks:
+      - pretix

@@ -99,7 +99,8 @@ event_patterns = [
             pretix.presale.views.organizer.OrganizerFavicon.as_view(),
             name='event.favicon'),
 
-    re_path(r'^order/(?P<order>[^/]+)/(?P<secret>[A-Za-z0-9]+)/open/(?P<hash>[a-z0-9]+)/$', pretix.presale.views.order.OrderOpen.as_view(),
+    # NOVA - hash temporarily set to optional (*), because it is empty when sending email, but its set in the actual email (TODO check at some point why)
+    re_path(r'^order/(?P<order>[^/]+)/(?P<secret>[A-Za-z0-9]+)/open/(?P<hash>[a-z0-9]*)/$', pretix.presale.views.order.OrderOpen.as_view(),
             name='event.order.open'),
     re_path(r'^order/(?P<order>[^/]+)/(?P<secret>[A-Za-z0-9]+)/$', pretix.presale.views.order.OrderDetails.as_view(),
             name='event.order'),
