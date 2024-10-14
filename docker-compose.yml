@@ -1,0 +1,38 @@
+services:
+  pretix:
+    build:
+      context: .
+    container_name: pretix
+    user: "1000:1000"
+    restart: always
+    volumes:
+      #- ./pyproject.toml:/pretalx/pyproject.toml:ro
+      - ./src/pretix.cfg:/etc/pretix/pretix.cfg:ro
+      - ./src:/pretix/src:delegated
+    depends_on:
+      - database
+      - redis
+    networks:
+      - pretix
+  database:
+    image: postgres:13.1-alpine
+    container_name: pretix-database
+    hostname: database
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./.docker/volumes/db:/var/lib/postgresql/data:delegated
+    networks:
+      - pretix
+
+  redis:
+    image: redis:latest
+    container_name: pretix-redis
+    restart: always
+    networks:
+      - pretix
+
+networks:
+  pretix:

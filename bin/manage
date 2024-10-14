@@ -1,0 +1,4 @@
+#!/bin/bash
+#docker compose exec -u pretixuser -T pretix pretix "$@"
+docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage "$@"
+
