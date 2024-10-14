@@ -1,4 +1,4 @@
 services:
-  pretalx:
+  pretix:
     ports:
       - "127.0.0.1:8355:80"
