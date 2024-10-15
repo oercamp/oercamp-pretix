@@ -30,7 +30,6 @@ RUN apt-get update && \
     /usr/sbin/update-locale LANG=C.UTF-8 && \
     mkdir /etc/pretix && \
     mkdir /pretix && \
-    mkdir /pretix/data && \
     mkdir /data && \
     useradd -ms /bin/bash -d /pretix -u 1000 pretixuser && \
     echo 'pretixuser ALL=(ALL) NOPASSWD:SETENV: /usr/bin/supervisord' >> /etc/sudoers && \
@@ -71,8 +70,7 @@ RUN chmod +x /usr/local/bin/pretix && \
 #    cd /pretix/src && \
 #    rm -f pretix.cfg &&  \
 #    mkdir -p data && \
-    chown -R pretixuser:pretixuser /pretix/data /data &&  \
-    sudo -u pretixuser make dev
+    chown -R pretixuser:pretixuser /data /media /pretix
 
 USER pretixuser
 #VOLUME ["/etc/pretix", "/data"]

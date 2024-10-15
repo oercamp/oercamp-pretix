@@ -1,7 +1,6 @@
 #!/bin/bash
 sudo -u pretalxuser -H git pull
-docker compose exec -u pretixuser -T pretix python3 /pretalx/src/manage.py makemigrations
-docker compose exec -u pretixuser -T pretix python3 /pretalx/src/manage.py migrate
-docker compose exec -u pretixuser -T pretix python3 /pretalx/src/manage.py rebuild
-docker compose exec -u pretixuser -T pretix python3 /pretalx/src/manage.py regenerate_css
-docker compose exec -u pretixuser -T pretix python3 /pretalx/src/manage.py clearcache
+docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py migrate
+docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py rebuild
+docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py compress
+docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py clearcache
