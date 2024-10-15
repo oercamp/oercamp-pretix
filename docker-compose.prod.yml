@@ -2,3 +2,6 @@ services:
   pretix:
     ports:
       - "127.0.0.1:8356:80"
+    volumes:
+      - ./.docker/volumes/media:/media
+      - ./.docker/volumes/static:/pretix/src/pretix/static.dist
