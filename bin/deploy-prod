@@ -5,4 +5,7 @@ docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py rebuil
 docker compose exec -u pretixuser -T -w /pretix/src pretix make production
 docker compose exec -u pretixuser -T -w /pretix/src pretix make npminstall
 docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py clear_cache
+# well, this will clear the cache. there should be a better way but ok for now
+docker compose down
+docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
 
