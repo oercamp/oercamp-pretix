@@ -1,6 +1,7 @@
 {% extends "pretixpresale/event/base.html" %}
 {% load i18n %}
 {% load bootstrap3 %}
+{% load static %}
 {% load eventsignal %}
 {% load money %}
 {% load expiresformat %}
@@ -21,6 +22,10 @@
     {% trans "Order details" %}
 {% endblock %}
 {% block content %}
+{% if "thanks" in request.GET %}
+<script type="text/javascript" src="{% static "tsparticles_confetti/tsparticles.confetti.min.js" %}"></script>
+<script type="text/javascript" src="{% static "tsparticles_confetti/do-confetti.js" %}"></script>
+{% endif %}
 <main>
     {% if "thanks" in request.GET or "paid" in request.GET %}
         <div class="thank-you">
