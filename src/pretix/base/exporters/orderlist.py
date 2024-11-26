@@ -100,6 +100,7 @@ class OrderListExporter(MultiSheetListExporter):
             ('orders', _('Orders')),
             ('positions', _('Order positions')),
             ('fees', _('Order fees')),
+            ('main_positions', _('Order positions without addons')),
         )
 
     @property
@@ -175,6 +176,8 @@ class OrderListExporter(MultiSheetListExporter):
             return self.iterate_positions(form_data)
         elif sheet == 'fees':
             return self.iterate_fees(form_data)
+        elif sheet == 'main_positions':
+            return self.iterate_positions(form_data, True)
 
     @cached_property
     def event_object_cache(self):
@@ -528,7 +531,7 @@ class OrderListExporter(MultiSheetListExporter):
         qs = self._date_filter(qs, form_data, rel='order__')
         return qs
 
-    def iterate_positions(self, form_data: dict):
+    def iterate_positions(self, form_data: dict, exclude_addons = False):
         base_qs = self.positions_qs(form_data)
 
         p_providers = OrderPayment.objects.filter(
@@ -673,6 +676,13 @@ class OrderListExporter(MultiSheetListExporter):
             ops = sorted(qs.filter(id__in=ids), key=lambda k: ids.index(k.pk))
 
             for op in ops:
+
+                if (
+                    exclude_addons and
+                    op.addon_to_id
+                ):
+                    continue
+
                 order = op.order
                 tz = ZoneInfo(self.event_object_cache[order.event_id].settings.timezone)
                 row = [
