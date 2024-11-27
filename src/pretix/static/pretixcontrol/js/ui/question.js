@@ -7,17 +7,22 @@ $(function () {
 
     $(".chart").css("height", "250px");
     var data_type = $("#question_chart").attr("data-type"),
-        data = JSON.parse($("#question-chart-data").html()),
+        dataContainer = JSON.parse($("#question-chart-data").html()),
         others_sum = 0,
         max_num = 8;
 
-    for (var i in data) {
-        data[i].value = data[i].count;
-        data[i].label = data[i].answer;
-        if (data[i].label.length > 20) {
-            data[i].label = data[i].label.substring(0, 20) + '…';
+    let data = dataContainer[0]
+
+    //NOVA: making the loop better and fixing undefined values
+    data.forEach(item => {
+        item.value = item.count || null;
+        item.label = item.answer || '';
+
+        // Truncate label if it exists and exceeds 20 characters
+        if (typeof item.label === 'string' && item.label.length > 20) {
+            item.label = item.label.substring(0, 20) + '…';
         }
-    }
+    });
 
     if (data_type == 'N') {
         // Sort
