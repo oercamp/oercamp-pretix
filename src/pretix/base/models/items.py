@@ -1591,6 +1591,7 @@ class Question(LoggedModel):
     TYPE_DATETIME = "W"
     TYPE_COUNTRYCODE = "CC"
     TYPE_PHONENUMBER = "TEL"
+    TYPE_HEADING = "HD"
     TYPE_CHOICES = (
         (TYPE_NUMBER, _("Number")),
         (TYPE_STRING, _("Text (one line)")),
@@ -1604,6 +1605,7 @@ class Question(LoggedModel):
         (TYPE_DATETIME, _("Date and time")),
         (TYPE_COUNTRYCODE, _("Country code (ISO 3166-1 alpha-2)")),
         (TYPE_PHONENUMBER, _("Phone number")),
+        (TYPE_HEADING, _("PSEUDO-FIELD: Heading / Divider")),
     )
     UNLOCALIZED_TYPES = [TYPE_DATE, TYPE_TIME, TYPE_DATETIME]
     ASK_DURING_CHECKIN_UNSUPPORTED = []
@@ -1615,7 +1617,10 @@ class Question(LoggedModel):
         on_delete=models.CASCADE
     )
     question = I18nTextField(
-        verbose_name=_("Question")
+        verbose_name=_("Question"),
+        help_text=_("TEST!"),
+        null=True,  # Allows NULL in the database
+        blank=True  # Allows the form to be submitted with an empty value
     )
     identifier = models.CharField(
         max_length=190,

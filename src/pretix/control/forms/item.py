@@ -90,7 +90,8 @@ class QuestionForm(I18nModelForm):
     question = I18nFormField(
         label=_("Question"),
         widget_kwargs={'attrs': {'rows': 2}},
-        widget=I18nTextarea
+        widget=I18nTextarea,
+        required=False  # Makes the field optional
     )
 
     def __init__(self, *args, **kwargs):

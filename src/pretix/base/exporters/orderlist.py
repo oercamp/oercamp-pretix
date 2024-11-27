@@ -628,6 +628,8 @@ class OrderListExporter(MultiSheetListExporter):
         questions = list(Question.objects.filter(event__in=self.events))
         options = defaultdict(list)
         for q in questions:
+            if (q.type == Question.TYPE_HEADING):
+                continue
             if q.type == Question.TYPE_CHOICE_MULTIPLE:
                 if form_data['group_multiple_choice']:
                     for o in q.options.all():
@@ -767,6 +769,8 @@ class OrderListExporter(MultiSheetListExporter):
                     else:
                         acache[a.question_id] = str(a)
                 for q in questions:
+                    if (q.type == Question.TYPE_HEADING):
+                        continue
                     if q.type == Question.TYPE_CHOICE_MULTIPLE:
                         if form_data['group_multiple_choice']:
                             row.append(", ".join(str(o.answer) for o in options[q.pk] if o.pk in acache.get(q.pk, set())))

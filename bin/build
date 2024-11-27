@@ -3,5 +3,6 @@ docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py migrat
 docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py rebuild
 docker compose exec -u pretixuser -T -w /pretix/src pretix make production
 docker compose exec -u pretixuser -T -w /pretix/src pretix make npminstall
+docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py compress
 docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py clear_cache
 docker compose exec -u root -T pretix supervisorctl restart pretixweb

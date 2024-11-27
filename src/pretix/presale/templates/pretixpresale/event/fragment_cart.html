@@ -208,30 +208,32 @@
                             {% endif %}
                         {% endif %}
                         {% for q in line.questions %}
-                            <dt>{{ q.question }}</dt>
-                            <dd>
-                                {% if q.answer %}
-                                    {% if q.answer.file %}
-                                        <span class="fa fa-file" aria-hidden="true"></span>
-                                        <a href="{{ q.answer.frontend_file_url }}?token={% answer_token request q.answer %}">
-                                            {{ q.answer.file_name }}
-                                        </a>
-                                        {% if q.answer.is_image %}
-                                            <br>
-                                            <a href="{{ q.answer.frontend_file_url }}?token={% answer_token request q.answer %}" data-lightbox="order"
-                                                    class="answer-thumb">
-                                                <img src="{{ q.answer.frontend_file_url }}?token={% answer_token request q.answer %}" alt="{% trans "The image you previously uploaded" %}">
+                            {% if q.type != "HD" %}
+                                <dt>{{ q.question }}</dt>
+                                <dd>
+                                    {% if q.answer %}
+                                        {% if q.answer.file %}
+                                            <span class="fa fa-file" aria-hidden="true"></span>
+                                            <a href="{{ q.answer.frontend_file_url }}?token={% answer_token request q.answer %}">
+                                                {{ q.answer.file_name }}
                                             </a>
+                                            {% if q.answer.is_image %}
+                                                <br>
+                                                <a href="{{ q.answer.frontend_file_url }}?token={% answer_token request q.answer %}" data-lightbox="order"
+                                                        class="answer-thumb">
+                                                    <img src="{{ q.answer.frontend_file_url }}?token={% answer_token request q.answer %}" alt="{% trans "The image you previously uploaded" %}">
+                                                </a>
+                                            {% endif %}
+                                        {% elif q.type == "M" %}
+                                            {{ q.answer|rich_text_snippet }}
+                                        {% else %}
+                                            {{ q.answer|linebreaksbr }}
                                         {% endif %}
-                                    {% elif q.type == "M" %}
-                                        {{ q.answer|rich_text_snippet }}
                                     {% else %}
-                                        {{ q.answer|linebreaksbr }}
+                                        <em class="text-muted">{% trans "not answered" %}</em>
                                     {% endif %}
-                                {% else %}
-                                    <em class="text-muted">{% trans "not answered" %}</em>
-                                {% endif %}
-                            </dd>
+                                </dd>
+                            {% endif %}
                         {% endfor %}
                         {% for q in line.additional_answers %}
                             <dt>{{ q.question }}</dt>

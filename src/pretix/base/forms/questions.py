@@ -907,6 +907,12 @@ class BaseQuestionsForm(forms.Form):
                     initial=initial,
                     widget=WrappedPhoneNumberPrefixWidget()
                 )
+            elif q.type == Question.TYPE_HEADING:
+                field = forms.CharField(
+                    required=False,
+                    max_length=q.valid_string_length_max,
+                    widget=forms.HiddenInput(attrs={'class': 'hidden-heading-field', 'data-heading': label}),
+                )
             field.question = q
             if answers:
                 # Cache the answer object for later use
@@ -972,6 +978,7 @@ class BaseQuestionsForm(forms.Form):
 
         def question_is_required(q):
             return (
+                q.type != Question.TYPE_HEADING and
                 q.required and
                 (not q.dependency_question_id or question_is_visible(q.dependency_question_id, q.dependency_values))
             )

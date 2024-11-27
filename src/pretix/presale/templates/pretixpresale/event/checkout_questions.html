@@ -4,7 +4,9 @@
 {% load rich_text %}
 {% load lists %}
 {% load escapejson %}
+{% load static %}
 {% block inner %}
+    <script type="text/javascript" src="{% static "pretixpresale/js/ui/question-dividers.js" %}"></script>
     <p>{% trans "Before we continue, we need you to answer some questions." %}</p>
     <p class="required-legend" aria-hidden="true">
         {% blocktrans trimmed %}

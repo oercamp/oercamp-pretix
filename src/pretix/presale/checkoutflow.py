@@ -1010,6 +1010,7 @@ class QuestionsStep(QuestionsViewMixin, CartMixin, TemplateFlowStep):
 
             def question_is_required(q):
                 return (
+                    q.type != Question.TYPE_HEADING and
                     q.required and
                     (not q.dependency_question_id or question_is_visible(q.dependency_question_id, q.dependency_values))
                 )

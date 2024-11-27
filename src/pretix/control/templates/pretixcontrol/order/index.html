@@ -568,42 +568,44 @@
                                             </dd>
                                         {% endif %}
                                         {% for q in line.questions %}
-                                            <dt>
-                                                {{ q.question }}
-                                                {% if q.ask_during_checkin %}
-                                                    <span class="fa fa-qrcode text-muted"
-                                                            data-toggle="tooltip"
-                                                            title="{% trans "This question will be asked during check-in." %}"
-                                                    ></span>
-                                                {% endif %}
-                                            </dt>
-                                            <dd>
-                                                {% if q.answer %}
-                                                    {% if q.answer.file %}
-                                                        <span class="fa fa-file"></span>
-                                                        <a href="{{ q.answer.backend_file_url }}?token={% answer_token request q.answer %}">
-                                                            {{ q.answer.file_name }}
-                                                        </a>
-                                                        <span class="label label-danger" data-toggle="tooltip"
-                                                                title="{% trans "This file has been uploaded by a user and could contain viruses or other malicious content." %}">
-                                                            {% trans "UNSAFE" %}
-                                                        </span>
-                                                        {% if q.answer.is_image %}
-                                                            <br>
-                                                            <a href="{{ q.answer.backend_file_url }}?token={% answer_token request q.answer %}" data-lightbox="order"
-                                                                class="answer-thumb">
-                                                                <img src="{{ q.answer.backend_file_url }}?token={% answer_token request q.answer %}">
-                                                            </a>
-                                                        {% endif %}
-                                                    {% elif q.type == "M" %}
-                                                        {{ q.answer.to_string_i18n|rich_text_snippet }}
-                                                    {% else %}
-                                                        {{ q.answer.to_string_i18n|linebreaksbr }}
+                                            {% if q.type != "HD" %}
+                                                <dt>
+                                                    {{ q.question }}
+                                                    {% if q.ask_during_checkin %}
+                                                        <span class="fa fa-qrcode text-muted"
+                                                                data-toggle="tooltip"
+                                                                title="{% trans "This question will be asked during check-in." %}"
+                                                        ></span>
                                                     {% endif %}
-                                                {% else %}
-                                                    <em>{% trans "not answered" %}</em>
-                                                {% endif %}
-                                            </dd>
+                                                </dt>
+                                                <dd>
+                                                    {% if q.answer %}
+                                                        {% if q.answer.file %}
+                                                            <span class="fa fa-file"></span>
+                                                            <a href="{{ q.answer.backend_file_url }}?token={% answer_token request q.answer %}">
+                                                                {{ q.answer.file_name }}
+                                                            </a>
+                                                            <span class="label label-danger" data-toggle="tooltip"
+                                                                    title="{% trans "This file has been uploaded by a user and could contain viruses or other malicious content." %}">
+                                                                {% trans "UNSAFE" %}
+                                                            </span>
+                                                            {% if q.answer.is_image %}
+                                                                <br>
+                                                                <a href="{{ q.answer.backend_file_url }}?token={% answer_token request q.answer %}" data-lightbox="order"
+                                                                    class="answer-thumb">
+                                                                    <img src="{{ q.answer.backend_file_url }}?token={% answer_token request q.answer %}">
+                                                                </a>
+                                                            {% endif %}
+                                                        {% elif q.type == "M" %}
+                                                            {{ q.answer.to_string_i18n|rich_text_snippet }}
+                                                        {% else %}
+                                                            {{ q.answer.to_string_i18n|linebreaksbr }}
+                                                        {% endif %}
+                                                    {% else %}
+                                                        <em>{% trans "not answered" %}</em>
+                                                    {% endif %}
+                                                </dd>
+                                            {% endif %}
                                         {% endfor %}
                                         {% for q in line.additional_fields %}
                                             <dt>{{ q.question }}</dt>
