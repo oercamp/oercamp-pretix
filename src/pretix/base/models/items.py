@@ -1428,6 +1428,17 @@ class ItemAddOn(models.Model):
         verbose_name=_("Position")
     )
 
+    # NOVA OERC-10: adding a simple dependency to another item, just through an number (id).
+    # TODO: migration play and error fix
+    item_dependency = models.ForeignKey(
+        Item,
+        related_name='addon_item_dependencies',
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        default=None  # Explicitly sets NULL as the default value
+    )
+
     class Meta:
         unique_together = (('base_item', 'addon_category'),)
         ordering = ('position', 'pk')
