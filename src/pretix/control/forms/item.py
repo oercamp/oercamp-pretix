@@ -796,6 +796,7 @@ class ItemUpdateForm(I18nModelForm):
             'hidden_if_available',
             'hidden_if_item_available',
             'issue_giftcard',
+            'addon_item_dependency_id',
             'require_membership',
             'require_membership_types',
             'require_membership_hidden',
@@ -1044,6 +1045,7 @@ class ItemAddOnsFormSet(I18nFormSet):
                     # should not cause the entire formset to be invalid.
                     continue
 
+
             if 'addon_category' in form.cleaned_data:
                 if form.cleaned_data['addon_category'].pk in categories:
                     raise ValidationError(_('You added the same add-on category twice'))
@@ -1079,18 +1081,6 @@ class ItemAddOnForm(I18nModelForm):
             }
         )
         self.fields['addon_category'].widget.choices = self.fields['addon_category'].choices
-
-        self.fields['item_dependency'].queryset = self.event.items.all()
-        self.fields['item_dependency'].widget = Select2(
-            attrs={
-                'data-model-select2': 'generic',
-                'data-select2-url': reverse('control:event.items.select2', kwargs={
-                    'event': self.event.slug,
-                    'organizer': self.event.organizer.slug,
-                }),
-            }
-        )
-        self.fields['item_dependency'].widget.choices = self.fields['item_dependency'].choices
 
     class Meta:
         model = ItemAddOn

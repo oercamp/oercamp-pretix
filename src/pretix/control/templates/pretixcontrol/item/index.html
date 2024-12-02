@@ -264,6 +264,7 @@
                             </div>
                         {% endif %}
                         {% bootstrap_field form.show_quota_left layout="control" %}
+                        {% bootstrap_field form.addon_item_dependency_id layout="control" %}
                         {% for f in plugin_forms %}
                             {% if not f.is_layouts and not f.title %}
                                 <hr />

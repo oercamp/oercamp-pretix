@@ -638,6 +638,14 @@ class Item(LoggedModel):
                     'product price.'),
         default=False
     )
+    addon_item_dependency_id = models.PositiveIntegerField(
+        default=None,
+        null=True,
+        blank=True,
+        verbose_name=_("Item dependency"),
+        help_text=_("If you select a product ID here, this product will only be selectable when that product is "
+                    "selected. This feature is implemented only for add-on products right now.")
+    )
     require_membership = models.BooleanField(
         verbose_name=_('Require a valid membership'),
         default=False,
@@ -1426,17 +1434,6 @@ class ItemAddOn(models.Model):
     position = models.PositiveIntegerField(
         default=0,
         verbose_name=_("Position")
-    )
-
-    # NOVA OERC-10: adding a simple dependency to another item, just through an number (id).
-    # TODO: migration play and error fix
-    item_dependency = models.ForeignKey(
-        Item,
-        related_name='addon_item_dependencies',
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True,
-        default=None  # Explicitly sets NULL as the default value
     )
 
     class Meta:
