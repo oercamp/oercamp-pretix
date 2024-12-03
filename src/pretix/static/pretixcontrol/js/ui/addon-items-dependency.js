@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
             if (dependentCheckbox && dependentCheckbox.checked) {
                 // If the dependent checkbox is checked, enable the current checkbox
                 checkbox.disabled = false;
-                checkboxLabel.classList.add('btn-checkbox-checked'); // Add checked class
             } else {
                 // If the dependent checkbox is not checked, disable the current checkbox and uncheck it
                 checkbox.disabled = true;
