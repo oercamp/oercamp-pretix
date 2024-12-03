@@ -5,6 +5,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
     // Loop through each checkbox and add an event listener
     dependentCheckboxes.forEach(function (checkbox) {
 
+        // Find the parent label
+        const checkboxLabel = checkbox.closest('label.btn.btn-default');
+
         const sourceId = checkbox.id;
         // Get the id of the dependent checkbox
         const dependentId = checkbox.getAttribute('data-addon-item-dependency-id');
@@ -25,10 +28,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
             if (dependentCheckbox && dependentCheckbox.checked) {
                 // If the dependent checkbox is checked, enable the current checkbox
                 checkbox.disabled = false;
+                checkboxLabel.classList.add('btn-checkbox-checked'); // Add checked class
             } else {
                 // If the dependent checkbox is not checked, disable the current checkbox and uncheck it
                 checkbox.disabled = true;
                 checkbox.checked = false;
+                checkboxLabel.classList.remove('btn-checkbox-checked'); // Remove checked class
             }
         }
 
