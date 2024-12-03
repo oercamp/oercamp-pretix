@@ -638,6 +638,14 @@ class Item(LoggedModel):
                     'product price.'),
         default=False
     )
+    addon_item_dependency_id = models.PositiveIntegerField(
+        default=None,
+        null=True,
+        blank=True,
+        verbose_name=_("Item dependency"),
+        help_text=_("If you select a product ID here, this product will only be selectable when that product is "
+                    "selected. This feature is implemented only for add-on products right now.")
+    )
     require_membership = models.BooleanField(
         verbose_name=_('Require a valid membership'),
         default=False,

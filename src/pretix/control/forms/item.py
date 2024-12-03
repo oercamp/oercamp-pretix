@@ -796,6 +796,7 @@ class ItemUpdateForm(I18nModelForm):
             'hidden_if_available',
             'hidden_if_item_available',
             'issue_giftcard',
+            'addon_item_dependency_id',
             'require_membership',
             'require_membership_types',
             'require_membership_hidden',
@@ -1043,6 +1044,7 @@ class ItemAddOnsFormSet(I18nFormSet):
                     # This form is going to be deleted so any of its errors
                     # should not cause the entire formset to be invalid.
                     continue
+
 
             if 'addon_category' in form.cleaned_data:
                 if form.cleaned_data['addon_category'].pk in categories:
