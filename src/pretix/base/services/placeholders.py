@@ -233,6 +233,9 @@ def base_placeholders(sender, **kwargs):
             'order_email', ['order'], lambda order: order.email, 'john@example.org'
         ),
         SimpleFunctionalTextPlaceholder(
+            'order_secret_token', ['order'], lambda order: order.secret_token, 'your-secret-token'
+        ),
+        SimpleFunctionalTextPlaceholder(
             'invoice_number', ['invoice'],
             lambda invoice: invoice.full_invoice_no,
             f'{sender.settings.invoice_numbers_prefix or (sender.slug.upper() + "-")}00000'

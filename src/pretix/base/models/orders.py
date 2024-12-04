@@ -322,6 +322,7 @@ class Order(LockModel, LoggedModel):
         # Invoice needs to be re-issued when the order is paid again
         default=False,
     )
+    secret_token = models.CharField(max_length=32, default=generate_secret)
 
     objects = ScopedManager(OrderQuerySet.as_manager().__class__, organizer='event__organizer')
 

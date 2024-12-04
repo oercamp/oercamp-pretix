@@ -730,13 +730,13 @@ class OrderSerializer(I18nAwareModelSerializer):
         list_serializer_class = OrderListSerializer
         fields = (
             'code', 'event', 'status', 'testmode', 'secret', 'email', 'phone', 'locale', 'datetime', 'expires', 'payment_date',
-            'payment_provider', 'fees', 'total', 'comment', 'custom_followup_at', 'invoice_address', 'positions', 'downloads',
+            'payment_provider', 'fees', 'total', 'comment', 'custom_followup_at', 'invoice_address', 'secret_token', 'positions', 'downloads',
             'checkin_attention', 'checkin_text', 'last_modified', 'payments', 'refunds', 'require_approval', 'sales_channel',
             'url', 'customer', 'valid_if_pending', 'api_meta'
         )
         read_only_fields = (
             'code', 'status', 'testmode', 'secret', 'datetime', 'expires', 'payment_date',
-            'payment_provider', 'fees', 'total', 'positions', 'downloads', 'customer',
+            'payment_provider', 'fees', 'total', 'secret_token', 'positions', 'downloads', 'customer',
             'last_modified', 'payments', 'refunds', 'require_approval', 'sales_channel'
         )
 
