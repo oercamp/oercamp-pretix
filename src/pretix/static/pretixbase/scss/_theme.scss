@@ -6,8 +6,8 @@ input[type=number] {
     padding-right: 2px; // decrease horizontal padding, as some versions of Firefox render the arrow-buttons on number inputs useless otherwise
   }
 }
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button {  
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
    opacity: 1;
    cursor: pointer;
    padding: 8px 4px;
@@ -57,14 +57,14 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .btn-primary:hover, .btn-primary:focus {
-  box-shadow: inset 0 1px 3px 0 var(--pretix-brand-primary-shade-25);
-  background: $btn-primary-bg;
+  box-shadow: inset 0 1px 3px 0 var(--pretix-brand-info-shade-25);
+  background: $btn-info-bg;
 }
 
 .btn-primary:active, .btn-primary:active:hover, .btn-primary:active:focus {
-  box-shadow: inset 0 1px 8px 0 var(--pretix-brand-primary-shade-25);
-  background: $btn-primary-bg;
-  outline: 0;
+  box-shadow: inset 0 1px 8px 0 var(--pretix-brand-info-shade-25);
+  background: $btn-info-bg;
+  outline: 0;a {
 }
 
 .btn-success:hover, .btn-success:focus {
@@ -247,6 +247,10 @@ svg.svg-icon {
 .badge-danger { background: $brand-danger; }
 .badge-warning { background: $brand-warning; }
 .badge-info { background: $brand-info; }
+
+h1, .h1 , h2, .h2 , h3, .h3 , h4, .h4 , h5, .h5 , h6, .h6 {
+  font-family: "Unbounded", "Open Sans", "OpenSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
 
 @include table-row-variant('success', var(--pretix-brand-success-lighten-40), var(--pretix-brand-success-lighten-35));
 @include table-row-variant('info', var(--pretix-brand-info-success-lighten-30), var(--pretix-brand-info-success-lighten-25));

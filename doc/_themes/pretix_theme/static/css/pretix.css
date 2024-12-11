@@ -4302,17 +4302,17 @@ input[type="radio"][disabled], input[type="checkbox"][disabled] {
 }
 
 a {
-    color: #8E44B3;
+    color: #313cfd;
     text-decoration: none;
     cursor: pointer
 }
 
 a:hover {
-    color: #622f7c;
+    color: #313cfd;
 }
 
 a:visited {
-    color: #673181;
+    color: #313cfd;
 }
 
 html {
@@ -5118,7 +5118,7 @@ div[class^='highlight'] pre {
     display: block;
     position: relative;
     font-size: 90%;
-    color: #8E44B3
+    color: #00175C
 }
 
 .wy-menu-vertical a:hover {
