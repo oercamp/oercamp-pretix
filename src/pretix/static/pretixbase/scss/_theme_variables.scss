@@ -25,6 +25,11 @@ $in-border-radius-base: 3px !default;
 $in-border-radius-large: 4px !default;
 $in-border-radius-small: 2px !default;
 
+$in-btn-border-radius-base: 24px !default;
+$in-btn-border-radius-large: 24px !default;
+$in-btn-border-radius-small: 24px !default;
+
+
 :root {
   @if (not $widget) {
     --pretix-font-family-sans-serif: #{$in-font-family-sans-serif};
@@ -123,6 +128,10 @@ $in-border-radius-small: 2px !default;
   --pretix-border-radius-base: #{$in-border-radius-base};
   --pretix-border-radius-large: #{$in-border-radius-large};
   --pretix-border-radius-small: #{$in-border-radius-small};
+
+  --pretix-btn-border-radius-base: #{$in-btn-border-radius-base};
+  --pretix-btn-border-radius-large: #{$in-btn-border-radius-large};
+  --pretix-btn-border-radius-small: #{$in-btn-border-radius-small};
 
   @if (not $widget) {
     --pretix-body-bg: #{$in-body-bg};
