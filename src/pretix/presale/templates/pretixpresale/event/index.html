@@ -261,5 +261,26 @@
         </aside>
     {% else %}
         {% eventsignal event "pretix.presale.signals.front_page_bottom_widget" subevent=subevent request=request %}
+        <!-- NOVA: Adding this to widget -->
+        <aside class="front-page" aria-labelledby="if-you-already-ordered-a-ticket">
+            <h3 id="if-you-already-ordered-a-ticket">{% trans "If you already ordered a ticket" %}</h3>
+            <div class="row">
+                <div class="col-md-8 col-xs-12">
+                    <p>
+                        {% blocktrans trimmed %}
+                        If you want to see or change the status and details of your order, click on the link in one of the
+                        emails we sent you during the order process. If you cannot find the link, click on the
+                        following button to request the link to your order to be sent to you again.
+                        {% endblocktrans %}
+                    </p>
+                </div>
+                <div class="col-md-4 col-xs-12">
+                    <a class="btn btn-block btn-default" href="{% eventurl event "presale:event.resend_link" %}">
+                    {% trans "Resend order link" %}
+                    </a>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </aside>
     {% endif %}
 {% endblock %}
