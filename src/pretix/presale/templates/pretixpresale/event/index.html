@@ -261,7 +261,7 @@
         </aside>
     {% else %}
         {% eventsignal event "pretix.presale.signals.front_page_bottom_widget" subevent=subevent request=request %}
-        <!-- NOVA: Adding this to widget -->
+        <!-- NOVA: Adding this to widget. Better through signal , but no time to implement a plugin. -->
         <aside class="front-page" aria-labelledby="if-you-already-ordered-a-ticket">
             <h3 id="if-you-already-ordered-a-ticket">{% trans "If you already ordered a ticket" %}</h3>
             <div class="row">
@@ -275,7 +275,7 @@
                     </p>
                 </div>
                 <div class="col-md-4 col-xs-12">
-                    <a class="btn btn-block btn-default" href="{% eventurl event "presale:event.resend_link" %}">
+                    <a class="btn btn-block btn-default" href="{% eventurl event "presale:event.resend_link" %}" target="_blank">
                     {% trans "Resend order link" %}
                     </a>
                 </div>
