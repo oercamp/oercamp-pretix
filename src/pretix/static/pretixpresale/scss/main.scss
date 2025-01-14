@@ -38,7 +38,7 @@ $body-bg: #f5f5f5 !default;
 .text-success { color: $brand-success; }
 .text-danger { color: $brand-danger; }
 h1 a, .btn {
-    text-decoration: none;
+    text-decoration: none !important;
 }
 a .fa:first-child { margin-right: 0.5ch }
 /*

@@ -281,6 +281,7 @@ input[type=number]::-webkit-outer-spin-button {
 
   h1, .h1, h2, .h2, h3, .h3, {
     font-family: "Unbounded", "Open Sans", "OpenSans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: $brand-primary;
   }
 
   h4, .h4, h5, .h5, h6, .h6 {
@@ -291,3 +292,8 @@ input[type=number]::-webkit-outer-spin-button {
   @include table-row-variant('info', var(--pretix-brand-info-success-lighten-30), var(--pretix-brand-info-success-lighten-25));
   @include table-row-variant('warning', var(--pretix-brand-warning-lighten-40), var(--pretix-brand-warning-lighten-35));
   @include table-row-variant('danger', var(--pretix-brand-danger-lighten-30), var(--pretix-brand-danger-lighten-25));
+
+// this ignores all a in backend
+a:not(.pretixcontrol *) {
+  text-decoration: underline;
+}
