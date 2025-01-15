@@ -297,3 +297,9 @@ input[type=number]::-webkit-outer-spin-button {
 a:not(.pretixcontrol *) {
   text-decoration: underline;
 }
+
+h1 a, h2 a, h3 a, .btn {
+  text-decoration: none !important;
+  color: $brand-primary;
+}
+
