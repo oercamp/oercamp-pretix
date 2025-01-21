@@ -31,6 +31,7 @@
 # Unless required by applicable law or agreed to in writing, software distributed under the Apache License 2.0 is
 # distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 # License for the specific language governing permissions and limitations under the License.
+import logging
 
 from collections import OrderedDict, defaultdict
 from decimal import Decimal
@@ -80,6 +81,7 @@ from ..timeframes import (
     resolve_timeframe_to_datetime_start_inclusive_end_exclusive,
 )
 
+logger = logging.getLogger(__name__)
 
 class OrderListExporter(MultiSheetListExporter):
     identifier = 'orderlist'
@@ -177,7 +179,7 @@ class OrderListExporter(MultiSheetListExporter):
         elif sheet == 'fees':
             return self.iterate_fees(form_data)
         elif sheet == 'main_positions':
-            return self.iterate_positions(form_data, True)
+            return self.iterate_positions_oercamp(form_data)
 
     @cached_property
     def event_object_cache(self):
@@ -823,6 +825,359 @@ class OrderListExporter(MultiSheetListExporter):
                     else:
                         row += [''] * len(meta_data_labels)
                 yield row
+
+    def iterate_positions_oercamp(self, form_data: dict):
+        base_qs = self.positions_qs(form_data)
+
+        p_providers = OrderPayment.objects.filter(
+            order=OuterRef('order'),
+            state__in=(OrderPayment.PAYMENT_STATE_CONFIRMED, OrderPayment.PAYMENT_STATE_REFUNDED,
+                       OrderPayment.PAYMENT_STATE_PENDING, OrderPayment.PAYMENT_STATE_CREATED),
+        ).values('order').annotate(
+            m=GroupConcat('provider', delimiter=',')
+        ).values(
+            'm'
+        ).order_by()
+        qs = base_qs.annotate(
+            payment_providers=Subquery(p_providers, output_field=CharField()),
+            checked_in_lists=Subquery(
+                Checkin.objects.filter(
+                    successful=True,
+                    type=Checkin.TYPE_ENTRY,
+                    position=OuterRef("pk"),
+                ).order_by().values("position").annotate(
+                    c=GroupConcat(
+                        "list__name",
+                        # These appear not to work properly on SQLite. Well, we don't support SQLite outside testing
+                        # anyways.
+                        ordered='sqlite' not in settings.DATABASES['default']['ENGINE'],
+                        distinct='sqlite' not in settings.DATABASES['default']['ENGINE'],
+                        delimiter=", "
+                    )
+                ).values("c")
+            ),
+        ).select_related(
+            'order', 'order__invoice_address', 'order__customer', 'item', 'variation',
+            'voucher', 'tax_rule', 'addon_to',
+        ).prefetch_related(
+            'subevent', 'subevent__meta_values',
+            'answers', 'answers__question', 'answers__options'
+        ).order_by('id', 'order__code')  # Add ordering by id and order.code here
+
+        has_subevents = self.events.filter(has_subevents=True).exists()
+
+        headers = [
+            _('Event slug'),
+            _('Event name'),
+            _('Order code'),
+            _('Position ID'),
+            _('Status'),
+            _('Attendee email'), # new
+            _('Email'),
+            _('Phone number'),
+            _('Order date'),
+            _('Order time'),
+        ]
+        if has_subevents:
+            headers.append(pgettext('subevent', 'Date'))
+            headers.append(_('Start date'))
+            headers.append(_('End date'))
+        headers += [
+            _('Product'),
+            _('Product ID'),
+            _('Variation'),
+            _('Variation ID'),
+            _('Price'),
+            _('Tax rate'),
+            _('Tax rule'),
+            _('Tax value'),
+            _('Attendee name'),
+        ]
+        name_scheme = PERSON_NAME_SCHEMES[self.event.settings.name_scheme] if not self.is_multievent else None
+        if name_scheme and len(name_scheme['fields']) > 1:
+            for k, label, w in name_scheme['fields']:
+                headers.append(_('Attendee name') + ': ' + str(label))
+        headers += [
+            #_('Attendee email'),
+            _('Company'),
+            _('Address'),
+            _('ZIP code'),
+            _('City'),
+            _('Country'),
+            pgettext('address', 'State'),
+            _('Voucher'),
+            _('Pseudonymization ID'),
+            _('Ticket secret'),
+            _('Seat ID'),
+            _('Seat name'),
+            _('Seat zone'),
+            _('Seat row'),
+            _('Seat number'),
+            _('Blocked'),
+            _('Valid from'),
+            _('Valid until'),
+            _('Order comment'),
+            _('Follow-up date'),
+            _('Add-on to position ID'),
+        ]
+
+        questions = list(Question.objects.filter(event__in=self.events))
+        options = defaultdict(list)
+        for q in questions:
+            if (q.type == Question.TYPE_HEADING):
+                continue
+            if q.type == Question.TYPE_CHOICE_MULTIPLE:
+                if form_data['group_multiple_choice']:
+                    for o in q.options.all():
+                        options[q.pk].append(o)
+                    headers.append(str(q.question))
+                else:
+                    for o in q.options.all():
+                        headers.append(str(q.question) + ' – ' + str(o.answer))
+                        options[q.pk].append(o)
+            else:
+                if q.type == Question.TYPE_CHOICE:
+                    for o in q.options.all():
+                        options[q.pk].append(o)
+                headers.append(str(q.question))
+        headers += [
+            _('Company'),
+            _('Invoice address name'),
+        ]
+        if name_scheme and len(name_scheme['fields']) > 1:
+            for k, label, w in name_scheme['fields']:
+                headers.append(_('Invoice address name') + ': ' + str(label))
+        headers += [
+            _('Invoice address street'), _('Invoice address ZIP code'), _('Invoice address city'),
+            _('Invoice address country'),
+            pgettext('address', 'Invoice address state'),
+            _('VAT ID'),
+        ]
+        headers += [
+            _('Sales channel'),
+            _('Order locale'),
+            _('E-mail address verified'),
+            _('External customer ID'),
+            _('Check-in lists'),
+            _('Payment providers'),
+        ]
+
+        # get meta_data labels from first cached event
+        meta_data_labels = next(iter(self.event_object_cache.values())).meta_data.keys()
+        if has_subevents:
+            headers += meta_data_labels
+
+
+        ###
+        # Add-on headers
+        ###
+        all_ids = list(base_qs.order_by('order__datetime', 'positionid').values_list('pk', flat=True))
+        yield self.ProgressSetTotal(total=len(all_ids))
+
+        #First Loop: get Add-On Headers
+
+        # A dictionary to keep track of item.id and its position in headers
+        addon_header_position_mapping = {}
+        # Save the starting index for the headers added in this section
+        addon_headers_start_index = len(headers)
+
+        for ids in chunked_iterable(all_ids, 1000):
+            ops = sorted(qs.filter(id__in=ids), key=lambda k: ids.index(k.pk))
+            for op in ops:
+                if (
+                    not op.addon_to_id
+                ):
+                    continue
+
+                addon_item_id = op.item.id
+                addon_item_name = str(op.item.name)
+
+                if addon_item_id not in addon_header_position_mapping:
+                    headers.append(addon_item_name)
+                    addon_header_position_mapping[addon_item_id] = len(headers) - 1
+
+        yield headers
+
+        #Second Loop: Add data Rows
+        #NOVA: we will remove the chunked iterable, because for checking add-on products we need to have access
+        # to all items not cut off at 1000.
+        #for ids in chunked_iterable(all_ids, 1000):
+        ops = sorted(qs.filter(id__in=ids), key=lambda k: ids.index(k.pk))
+
+        for i, op in enumerate(ops):
+
+            if (op.addon_to_id):
+                continue
+
+            order = op.order
+            tz = ZoneInfo(self.event_object_cache[order.event_id].settings.timezone)
+            row = [
+                self.event_object_cache[order.event_id].slug,
+                str(self.event_object_cache[order.event_id].name),
+                order.code,
+                op.positionid,
+                _("canceled") if op.canceled else order.get_extended_status_display(),
+                op.attendee_email, #new
+                order.email,
+                str(order.phone) if order.phone else '',
+                order.datetime.astimezone(tz).strftime('%Y-%m-%d'),
+                order.datetime.astimezone(tz).strftime('%H:%M:%S'),
+            ]
+            if has_subevents:
+                if op.subevent:
+                    row.append(op.subevent.name)
+                    row.append(op.subevent.date_from.astimezone(self.event_object_cache[order.event_id].timezone).strftime('%Y-%m-%d %H:%M:%S'))
+                    if op.subevent.date_to:
+                        row.append(op.subevent.date_to.astimezone(self.event_object_cache[order.event_id].timezone).strftime('%Y-%m-%d %H:%M:%S'))
+                    else:
+                        row.append('')
+                else:
+                    row.append('')
+                    row.append('')
+                    row.append('')
+            row += [
+                str(op.item),
+                str(op.item_id),
+                str(op.variation) if op.variation else '',
+                str(op.variation_id) if op.variation_id else '',
+                op.price,
+                op.tax_rate,
+                str(op.tax_rule) if op.tax_rule else '',
+                op.tax_value,
+                op.attendee_name,
+            ]
+            if name_scheme and len(name_scheme['fields']) > 1:
+                for k, label, w in name_scheme['fields']:
+                    row.append(
+                        get_name_parts_localized(op.attendee_name_parts, k)
+                    )
+            row += [
+                #op.attendee_email,
+                op.company or '',
+                op.street or '',
+                op.zipcode or '',
+                op.city or '',
+                op.country if op.country else '',
+                op.state or '',
+                op.voucher.code if op.voucher else '',
+                op.pseudonymization_id,
+                op.secret,
+            ]
+
+            if op.seat:
+                row += [
+                    op.seat.seat_guid,
+                    str(op.seat),
+                    op.seat.zone_name,
+                    op.seat.row_name,
+                    op.seat.seat_number,
+                ]
+            else:
+                row += ['', '', '', '', '']
+
+            row += [
+                _('Yes') if op.blocked else '',
+                date_format(op.valid_from.astimezone(tz), 'SHORT_DATETIME_FORMAT') if op.valid_from else '',
+                date_format(op.valid_until.astimezone(tz), 'SHORT_DATETIME_FORMAT') if op.valid_until else '',
+            ]
+            row.append(order.comment)
+            row.append(order.custom_followup_at.strftime("%Y-%m-%d") if order.custom_followup_at else "")
+            row.append(op.addon_to.positionid if op.addon_to_id else "")
+            acache = {}
+            for a in op.answers.all():
+                # We do not want to localize Date, Time and Datetime question answers, as those can lead
+                # to difficulties parsing the data (for example 2019-02-01 may become Février, 2019 01 in French).
+                if a.question.type in (Question.TYPE_CHOICE_MULTIPLE, Question.TYPE_CHOICE):
+                    acache[a.question_id] = set(o.pk for o in a.options.all())
+                elif a.question.type in Question.UNLOCALIZED_TYPES:
+                    acache[a.question_id] = a.answer
+                else:
+                    acache[a.question_id] = str(a)
+            for q in questions:
+                if (q.type == Question.TYPE_HEADING):
+                    continue
+                if q.type == Question.TYPE_CHOICE_MULTIPLE:
+                    if form_data['group_multiple_choice']:
+                        row.append(", ".join(str(o.answer) for o in options[q.pk] if o.pk in acache.get(q.pk, set())))
+                    else:
+                        for o in options[q.pk]:
+                            row.append(_('Yes') if o.pk in acache.get(q.pk, set()) else _('No'))
+                elif q.type == Question.TYPE_CHOICE:
+                    # Join is only necessary if the question type was modified but also keeps the code simpler here
+                    # as we'd otherwise need some [0] and existance checks
+                    row.append(", ".join(str(o.answer) for o in options[q.pk] if o.pk in acache.get(q.pk, set())))
+                else:
+                    row.append(acache.get(q.pk, ''))
+
+            try:
+                row += [
+                    order.invoice_address.company,
+                    order.invoice_address.name,
+                ]
+                if name_scheme and len(name_scheme['fields']) > 1:
+                    for k, label, w in name_scheme['fields']:
+                        row.append(
+                            get_name_parts_localized(order.invoice_address.name_parts, k)
+                        )
+                row += [
+                    order.invoice_address.street,
+                    order.invoice_address.zipcode,
+                    order.invoice_address.city,
+                    order.invoice_address.country if order.invoice_address.country else
+                    order.invoice_address.country_old,
+                    order.invoice_address.state,
+                    order.invoice_address.vat_id,
+                ]
+            except InvoiceAddress.DoesNotExist:
+                row += [''] * (8 + (len(name_scheme['fields']) if name_scheme and len(name_scheme['fields']) > 1 else 0))
+            row += [
+                order.sales_channel,
+                order.locale,
+                _('Yes') if order.email_known_to_work else _('No'),
+                str(order.customer.external_identifier) if order.customer and order.customer.external_identifier else '',
+            ]
+            row.append(op.checked_in_lists or "")
+            row.append(', '.join([
+                str(self.providers.get(p, p)) for p in sorted(set((op.payment_providers or '').split(',')))
+                if p and p != 'free'
+            ]))
+
+            if has_subevents:
+                if op.subevent:
+                    row += op.subevent.meta_data.values()
+                else:
+                    row += [''] * len(meta_data_labels)
+
+            # Here we will check the following items in the list to search for Add-On items.
+            # The main query is sorted by id and order currently, so the next in the list should be
+            # an add-on item if it is bought.
+            # We also expect, that if add-on items are bought, they will be directly after the main item
+            addon_row_array = [_('No')] * (len(headers) - addon_headers_start_index)
+
+
+            j = i + 1  # Start checking from the next element
+            while j < len(ops):
+                op_next_item = ops[j]
+                if (op_next_item.addon_to_id is None):
+                    break
+
+                if (op_next_item.addon_to_id != op.id):
+                    continue
+
+                #Use the mapping to find the correct position
+                op_next_item_id = op_next_item.item.id
+                if op_next_item_id in addon_header_position_mapping:
+                    position = addon_header_position_mapping[op_next_item_id]
+                    relative_position = position - addon_headers_start_index
+                    if 0 <= relative_position < len(addon_row_array):
+                        addon_row_array[relative_position] = _("Yes")
+
+                j += 1  # Move to the next element
+
+            # Append the row_array to the existing row
+            row.extend(addon_row_array)
+
+            yield row
 
     def get_filename(self):
         if self.is_multievent:

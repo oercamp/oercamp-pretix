@@ -8,3 +8,6 @@ docker compose exec -u pretixuser -T -w /pretix/src pretix make npminstall
 docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py compress
 docker compose exec -u pretixuser -T pretix python3 /pretix/src/manage.py clear_cache
 docker compose exec -u root -T pretix supervisorctl restart pretixweb
+
+docker compose down --remove-orphans
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
