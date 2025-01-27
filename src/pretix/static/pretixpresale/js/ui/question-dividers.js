@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
             newElement = document.createElement("hr");
         } else {
             // Otherwise, create an h4 header with the headingText
-            newElement = document.createElement("h4");
+            newElement = document.createElement("h2");
             newElement.textContent = headingText;
         }
 
