@@ -1884,7 +1884,7 @@ msgstr "Gebühren"
 
 #: pretix/base/exporters/orderlist.py:103
 msgid "Order positions without addons"
-msgstr "Bestellzeilen ohne Add-Ons"
+msgstr "Bestellzeilen"
 
 #: pretix/base/exporters/orderlist.py:110
 msgid "Only paid orders"

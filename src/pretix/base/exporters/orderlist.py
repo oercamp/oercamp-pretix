@@ -872,8 +872,8 @@ class OrderListExporter(MultiSheetListExporter):
             _('Order code'),
             _('Position ID'),
             _('Status'),
-            _('Attendee email'), # new
             _('Email'),
+            _('Attendee email'), # new
             _('Phone number'),
             _('Order date'),
             _('Order time'),
@@ -887,6 +887,38 @@ class OrderListExporter(MultiSheetListExporter):
             _('Product ID'),
             _('Variation'),
             _('Variation ID'),
+        ]
+
+        ###
+        # Add-on headers
+        ###
+        all_ids = list(base_qs.order_by('order__datetime', 'positionid').values_list('pk', flat=True))
+        yield self.ProgressSetTotal(total=len(all_ids))
+
+        #Loop: get Add-On Headers
+        # A dictionary to keep track of item.id and its position in headers
+        addon_header_position_mapping = {}
+        # Save the starting index for the headers added in this section
+        addon_headers_start_index = len(headers)
+        addon_headers_count = 0 # will be incremented in loop
+
+        for ids in chunked_iterable(all_ids, 1000):
+            ops = sorted(qs.filter(id__in=ids), key=lambda k: ids.index(k.pk))
+            for op in ops:
+                if (
+                    not op.addon_to_id
+                ):
+                    continue
+
+                addon_item_id = op.item.id
+                addon_item_name = str(op.item.name)
+
+                if addon_item_id not in addon_header_position_mapping:
+                    headers.append(addon_item_name)
+                    addon_header_position_mapping[addon_item_id] = len(headers) - 1
+                    addon_headers_count += 1
+
+        headers += [
             _('Price'),
             _('Tax rate'),
             _('Tax rule'),
@@ -967,41 +999,12 @@ class OrderListExporter(MultiSheetListExporter):
         if has_subevents:
             headers += meta_data_labels
 
-
-        ###
-        # Add-on headers
-        ###
-        all_ids = list(base_qs.order_by('order__datetime', 'positionid').values_list('pk', flat=True))
-        yield self.ProgressSetTotal(total=len(all_ids))
-
-        #First Loop: get Add-On Headers
-
-        # A dictionary to keep track of item.id and its position in headers
-        addon_header_position_mapping = {}
-        # Save the starting index for the headers added in this section
-        addon_headers_start_index = len(headers)
-
-        for ids in chunked_iterable(all_ids, 1000):
-            ops = sorted(qs.filter(id__in=ids), key=lambda k: ids.index(k.pk))
-            for op in ops:
-                if (
-                    not op.addon_to_id
-                ):
-                    continue
-
-                addon_item_id = op.item.id
-                addon_item_name = str(op.item.name)
-
-                if addon_item_id not in addon_header_position_mapping:
-                    headers.append(addon_item_name)
-                    addon_header_position_mapping[addon_item_id] = len(headers) - 1
-
         yield headers
 
         #Second Loop: Add data Rows
         #NOVA: we will remove the chunked iterable, because for checking add-on products we need to have access
         # to all items not cut off at 1000.
-        #for ids in chunked_iterable(all_ids, 1000):
+        #old code: for ids in chunked_iterable(all_ids, 1000):
         ops = sorted(qs.filter(id__in=ids), key=lambda k: ids.index(k.pk))
 
         for i, op in enumerate(ops):
@@ -1017,8 +1020,8 @@ class OrderListExporter(MultiSheetListExporter):
                 order.code,
                 op.positionid,
                 _("canceled") if op.canceled else order.get_extended_status_display(),
-                op.attendee_email, #new
                 order.email,
+                op.attendee_email, #new
                 str(order.phone) if order.phone else '',
                 order.datetime.astimezone(tz).strftime('%Y-%m-%d'),
                 order.datetime.astimezone(tz).strftime('%H:%M:%S'),
@@ -1040,6 +1043,41 @@ class OrderListExporter(MultiSheetListExporter):
                 str(op.item_id),
                 str(op.variation) if op.variation else '',
                 str(op.variation_id) if op.variation_id else '',
+            ]
+
+            ###
+            # ADD-ON product rows:
+            ###
+
+            # Here we will check the following items in the list to search for Add-On items.
+            # The main query is sorted by id and order currently, so the next in the list should be
+            # an add-on item if it is bought.
+            # We also expect, that if add-on items are bought, they will be directly after the main item
+            addon_row_array = [_('No')] * addon_headers_count #(len(headers) - addon_headers_start_index)
+
+            j = i + 1  # Start checking from the next element
+            while j < len(ops):
+                op_next_item = ops[j]
+                if (op_next_item.addon_to_id is None):
+                    break
+
+                if (op_next_item.addon_to_id != op.id):
+                    continue
+
+                #Use the mapping to find the correct position
+                op_next_item_id = op_next_item.item.id
+                if op_next_item_id in addon_header_position_mapping:
+                    position = addon_header_position_mapping[op_next_item_id]
+                    relative_position = position - addon_headers_start_index
+                    if 0 <= relative_position < len(addon_row_array):
+                        addon_row_array[relative_position] = _("Yes")
+
+                j += 1  # Move to the next element
+
+            # Append the row_array to the existing row
+            row.extend(addon_row_array)
+
+            row += [
                 op.price,
                 op.tax_rate,
                 str(op.tax_rule) if op.tax_rule else '',
@@ -1147,35 +1185,6 @@ class OrderListExporter(MultiSheetListExporter):
                     row += op.subevent.meta_data.values()
                 else:
                     row += [''] * len(meta_data_labels)
-
-            # Here we will check the following items in the list to search for Add-On items.
-            # The main query is sorted by id and order currently, so the next in the list should be
-            # an add-on item if it is bought.
-            # We also expect, that if add-on items are bought, they will be directly after the main item
-            addon_row_array = [_('No')] * (len(headers) - addon_headers_start_index)
-
-
-            j = i + 1  # Start checking from the next element
-            while j < len(ops):
-                op_next_item = ops[j]
-                if (op_next_item.addon_to_id is None):
-                    break
-
-                if (op_next_item.addon_to_id != op.id):
-                    continue
-
-                #Use the mapping to find the correct position
-                op_next_item_id = op_next_item.item.id
-                if op_next_item_id in addon_header_position_mapping:
-                    position = addon_header_position_mapping[op_next_item_id]
-                    relative_position = position - addon_headers_start_index
-                    if 0 <= relative_position < len(addon_row_array):
-                        addon_row_array[relative_position] = _("Yes")
-
-                j += 1  # Move to the next element
-
-            # Append the row_array to the existing row
-            row.extend(addon_row_array)
 
             yield row
 
