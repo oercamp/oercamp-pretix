@@ -1,6 +1,15 @@
 
 ## (nova) Pretix  
 
+### Tech stack
+
+Pretix uses following tech-stack:
+
+* Gunicorn - webserver for Python/Django apps
+* ~~MySQL~~ PostgreSQL
+* Python / Django Framework
+* Production runs a nginx webserver as a proxy.
+
 ## Installation for local Development
 
 * Create ``src/pretix.cfg``from ``src/pretix.example.cfg`` and edit it to your needs.
