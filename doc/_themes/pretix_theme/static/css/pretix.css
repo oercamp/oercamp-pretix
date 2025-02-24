@@ -6106,3 +6106,8 @@ section > a.screenshot {
 .rst-content td > .line-block {
     margin-left: 0 !important;
 }
+
+
+input:invalid {
+  border: 1px solid red;
+}
