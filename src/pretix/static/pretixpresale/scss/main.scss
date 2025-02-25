@@ -527,6 +527,10 @@ h2 .label {
     font-size: 30px;
 }
 
+input:invalid, textarea:invalid {
+  border: 1px solid red;
+}
+
 @import "_iframe.scss";
 @import "_a11y.scss";
 @import "_print.scss";
