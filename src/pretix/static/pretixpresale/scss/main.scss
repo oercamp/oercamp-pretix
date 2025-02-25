@@ -527,7 +527,7 @@ h2 .label {
     font-size: 30px;
 }
 
-input:invalid, textarea:invalid {
+input:user-invalid, textarea:user-invalid {
   border: 1px solid red;
 }
 
