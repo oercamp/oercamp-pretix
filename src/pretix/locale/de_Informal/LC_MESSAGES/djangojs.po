@@ -709,7 +709,7 @@ msgstr ""
 
 #: pretix/static/pretixpresale/js/ui/cart.js:45
 msgid "Cart expired"
-msgstr "Warenkorb abgelaufen"
+msgstr "Leider ist deine Sitzung abgelaufen. Du kannst jetzt weitermachen, wenn du auf „Fortfahren“ klickst."
 
 #: pretix/static/pretixpresale/js/ui/cart.js:50
 msgid "The items in your cart are reserved for you for one minute."
