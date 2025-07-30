@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: 1\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-09-26 11:22+0000\n"
-"PO-Revision-Date: 2024-09-26 11:51+0000\n"
+"PO-Revision-Date: 2025-07-30 10:42+0200\n"
 "Last-Translator: Raphael Michel <michel@rami.io>\n"
 "Language-Team: German (informal) <https://translate.pretix.eu/projects/"
 "pretix/pretix/de_Informal/>\n"
-"Language: de_Informal\n"
+"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+"X-Generator: Poedit 3.6\n"
 
 #: pretix/_base_settings.py:79
 msgid "English"
@@ -285,7 +285,7 @@ msgid ""
 "Updating add-ons, bundles, or variations via PATCH/PUT is not supported. "
 "Please use the dedicated nested endpoint."
 msgstr ""
-"Varianten, Zusatzprodukte und Bundles können nicht per PATCH/PUT geändert "
+"Varianten, Programmteile und Bundles können nicht per PATCH/PUT geändert "
 "werden, bitte nutze die separate Ressource."
 
 #: pretix/api/serializers/item.py:306
@@ -2319,7 +2319,7 @@ msgstr "Bestellkommentar"
 
 #: pretix/base/exporters/orderlist.py:622
 msgid "Add-on to position ID"
-msgstr "Zusatzprodukt zu Position"
+msgstr "Programmteil zu Position"
 
 #: pretix/base/exporters/orderlist.py:650 pretix/base/pdf.py:340
 msgid "Invoice address street"
@@ -3736,7 +3736,7 @@ msgstr "Zeigt versteckte Produkte an, die zu diesem Gutschein passen"
 #: pretix/base/modelimport_vouchers.py:343 pretix/base/models/vouchers.py:301
 msgid "Offer all add-on products for free when redeeming this voucher"
 msgstr ""
-"Alle Zusatzprodukte kostenlos anbieten, wenn dieser Gutschein eingelöst wird"
+"Alle Programmteile kostenlos anbieten, wenn dieser Gutschein eingelöst wird"
 
 #: pretix/base/modelimport_vouchers.py:351 pretix/base/models/vouchers.py:305
 msgid ""
@@ -3856,7 +3856,7 @@ msgstr ""
 
 #: pretix/base/models/checkin.py:79
 msgid "Allow checking in add-on tickets by scanning the main ticket"
-msgstr "Check-in von Zusatzprodukten durch Scan des Haupttickets erlauben"
+msgstr "Check-in von Programmteilen durch Scan des Haupttickets erlauben"
 
 #: pretix/base/models/checkin.py:81
 msgid ""
@@ -3865,7 +3865,7 @@ msgid ""
 "rejected.."
 msgstr ""
 "Ein Scan ist nur möglich, wenn die Check-in-Liste so konfiguriert ist, dass "
-"es immer genau ein passendes Zusatzprodukt gibt. Uneindeutige Scans werden "
+"es immer genau ein passendes Programmteil gibt. Uneindeutige Scans werden "
 "abgelehnt."
 
 #: pretix/base/models/checkin.py:85 pretix/control/navigation.py:638
@@ -4123,7 +4123,7 @@ msgstr "Auf bestimmte Produkte anwenden"
 
 #: pretix/base/models/discount.py:106
 msgid "Count add-on products"
-msgstr "Zusatzprodukte einbeziehen"
+msgstr "Programmteile einbeziehen"
 
 #: pretix/base/models/discount.py:107 pretix/base/models/discount.py:162
 msgid "Discounts never apply to bundled products"
@@ -4198,7 +4198,7 @@ msgstr ""
 
 #: pretix/base/models/discount.py:161
 msgid "Apply to add-on products"
-msgstr "Auf Zusatzprodukte anwenden"
+msgstr "Auf Programmteile anwenden"
 
 #: pretix/base/models/discount.py:167
 msgid ""
@@ -4614,7 +4614,7 @@ msgstr "Kategoriebeschreibung"
 
 #: pretix/base/models/items.py:109
 msgid "Products in this category are add-on products"
-msgstr "Produkte in dieser Kategorie sind Zusatzprodukte"
+msgstr "Produkte in dieser Kategorie sind Programmteile"
 
 #: pretix/base/models/items.py:110
 msgid ""
@@ -4625,7 +4625,7 @@ msgstr ""
 "Wenn diese Option ausgewählt ist, können die Produkte dieser Kategorie nicht "
 "allein verkauft werden. Sie können nur in Kombination mit einem Produkt "
 "gekauft werden, für das diese Kategorie als mögliche Quelle für "
-"Zusatzprodukte konfiguriert ist."
+"Programmteile konfiguriert ist."
 
 #: pretix/base/models/items.py:117
 #: pretix/control/templates/pretixcontrol/items/categories.html:3
@@ -4637,11 +4637,11 @@ msgstr "Produktkategorien"
 #: pretix/base/models/items.py:123
 #, python-brace-format
 msgid "{category} (Add-On products)"
-msgstr "{category} (Zusatzprodukte)"
+msgstr "{category} (Programmteile)"
 
 #: pretix/base/models/items.py:128
 msgid "Add-On products"
-msgstr "Zusatzprodukte"
+msgstr "Programmteile"
 
 #: pretix/base/models/items.py:184 pretix/base/models/items.py:240
 msgid "Disable product for this date"
@@ -4865,7 +4865,7 @@ msgid ""
 msgstr ""
 "Wenn diese Option gesetzt ist, wird das Produkt nur als Teil von Paketen "
 "verkauft. Diese Option darf <strong>nicht</strong> gesetzt werden, wenn "
-"dieses Produkt als Zusatzprodukt verwendet werden soll, sondern nur für "
+"dieses Produkt als Programmteile verwendet werden soll, sondern nur für "
 "feste Produktpakete!"
 
 #: pretix/base/models/items.py:588
@@ -5237,14 +5237,14 @@ msgstr "Maximale Anzahl"
 
 #: pretix/base/models/items.py:1418
 msgid "Add-Ons are included in the price"
-msgstr "Zusatzprodukte sind im Preis enthalten"
+msgstr "Programmteile sind im Preis enthalten"
 
 #: pretix/base/models/items.py:1419
 msgid ""
 "If selected, adding add-ons to this ticket is free, even if the add-ons "
 "would normally cost money individually."
 msgstr ""
-"Wenn diese Option aktiviert ist, können die Zusatzprodukte ohne Aufpreis "
+"Wenn diese Option aktiviert ist, können die Programmteile ohne Aufpreis "
 "hinzugefügt werden, selbst wenn sie eigentlich Geld kosten würden."
 
 #: pretix/base/models/items.py:1424
@@ -5254,12 +5254,12 @@ msgstr "Erlaube, das gleiche Produkt mehrfach auszuwählen"
 #: pretix/base/models/items.py:1443
 msgid "The add-on's category must belong to the same event as the item."
 msgstr ""
-"Die Kategorie für Zusatzprodukte muss zur selben Veranstaltung gehören wie "
+"Die Kategorie für Programmteile muss zur selben Veranstaltung gehören wie "
 "das Produkt."
 
 #: pretix/base/models/items.py:1448
 msgid "The item already has an add-on of this category."
-msgstr "Dieses Produkt hat bereits Zusatzprodukte mit dieser Kategorie."
+msgstr "Dieses Produkt hat bereits Programmteile mit dieser Kategorie."
 
 #: pretix/base/models/items.py:1453
 msgid "The minimum count needs to be equal to or greater than zero."
@@ -6408,8 +6408,8 @@ msgid ""
 "as part of a bundle, since vouchers cannot be applied to add-on products or "
 "bundled products."
 msgstr ""
-"Du kannst kein Produkt auswählen, das nur als Zusatzprodukt oder nur als "
-"enthaltenes Produkt verfügbar ist, da Gutscheine nicht auf Zusatzprodukte "
+"Du kannst kein Produkt auswählen, das nur als Programmteil oder nur als "
+"enthaltenes Produkt verfügbar ist, da Gutscheine nicht auf Programmteile "
 "oder enthaltene Produkte angewendet werden können."
 
 #: pretix/base/models/vouchers.py:348
@@ -6432,7 +6432,7 @@ msgstr "Diese Variante gehört nicht zu diesem Produkt."
 #: pretix/base/models/vouchers.py:355
 msgid "It is currently not possible to create vouchers for add-on products."
 msgstr ""
-"Es ist aktuell nicht möglich, Gutscheine für Zusatzprodukte zu erstellen."
+"Es ist aktuell nicht möglich, Gutscheine für Programmteile zu erstellen."
 
 #: pretix/base/models/vouchers.py:357 pretix/base/models/vouchers.py:469
 msgid ""
@@ -7067,7 +7067,7 @@ msgstr "123,45 EUR"
 
 #: pretix/base/pdf.py:163
 msgid "Price including add-ons"
-msgstr "Preis inklusive Zusatzprodukte"
+msgstr "Preis inklusive Programmteile"
 
 #: pretix/base/pdf.py:173 pretix/base/pdf.py:331
 #: pretix/base/services/invoices.py:473
@@ -7257,7 +7257,7 @@ msgstr "Atlantis"
 
 #: pretix/base/pdf.py:365
 msgid "List of Add-Ons"
-msgstr "Liste der Zusatzprodukte"
+msgstr "Liste der Programmteile"
 
 #: pretix/base/pdf.py:366
 msgid ""
@@ -7769,11 +7769,11 @@ msgstr "Der ausgewählte Termin ist nicht aktiv."
 
 #: pretix/base/services/cart.py:194 pretix/base/services/orders.py:188
 msgid "You can not select an add-on for the selected product."
-msgstr "Du kannst für das ausgewählte Produkt kein Zusatzprodukt auswählen."
+msgstr "Du kannst für das ausgewählte Produkt kein Programmteil auswählen."
 
 #: pretix/base/services/cart.py:195 pretix/base/services/orders.py:189
 msgid "You can not select two variations of the same add-on product."
-msgstr "Du kannst nur eine Variante von jedem Zusatzprodukt auswählen."
+msgstr "Du kannst nur eine Variante von jedem Programmteil auswählen."
 
 #: pretix/base/services/cart.py:197 pretix/base/services/orders.py:191
 #, python-format
@@ -7784,10 +7784,10 @@ msgid_plural ""
 "You can select at most %(max)s add-ons from the category %(cat)s for the "
 "product %(base)s."
 msgstr[0] ""
-"Du kannst maximal %(max)s Zusatzprodukt aus der Kategorie %(cat)s für das "
+"Du kannst maximal %(max)s Programmteil aus der Kategorie %(cat)s für das "
 "Produkt %(base)s auswählen."
 msgstr[1] ""
-"Du kannst maximal %(max)s Zusatzprodukte aus der Kategorie %(cat)s für das "
+"Du kannst maximal %(max)s Programmteile aus der Kategorie %(cat)s für das "
 "Produkt %(base)s auswählen."
 
 #: pretix/base/services/cart.py:202 pretix/base/services/orders.py:196
@@ -7799,10 +7799,10 @@ msgid_plural ""
 "You need to select at least %(min)s add-ons from the category %(cat)s for "
 "the product %(base)s."
 msgstr[0] ""
-"Du musst mindestens %(min)s Zusatzprodukt aus der Kategorie %(cat)s für das "
+"Du musst mindestens %(min)s Programmteil aus der Kategorie %(cat)s für das "
 "Produkt %(base)s auswählen."
 msgstr[1] ""
-"Du musst mindestens %(min)s Zusatzprodukte aus der Kategorie %(cat)s für das "
+"Du musst mindestens %(min)s Programmteile aus der Kategorie %(cat)s für das "
 "Produkt %(base)s auswählen."
 
 #: pretix/base/services/cart.py:206 pretix/base/services/orders.py:200
@@ -7811,7 +7811,7 @@ msgid ""
 "You can select every add-on from the category %(cat)s for the product "
 "%(base)s at most once."
 msgstr ""
-"Du kannst jedes Zusatzprodukt aus der Kategorie %(cat)s für das Produkt "
+"Du kannst jedes Programmteil aus der Kategorie %(cat)s für das Produkt "
 "%(base)s höchstens ein mal auswählen."
 
 #: pretix/base/services/cart.py:207
@@ -8552,7 +8552,7 @@ msgid ""
 "This is an add-on product, please select the base position it should be "
 "added to."
 msgstr ""
-"Dieses Produkt ist nur als Zusatzprodukt verfügbar, bitte wähle die "
+"Dieses Produkt ist nur als Programmteil verfügbar, bitte wähle die "
 "Basisposition zu der es hinzugefügt werden soll."
 
 #: pretix/base/services/orders.py:1528
@@ -8560,7 +8560,7 @@ msgid ""
 "The selected base position does not allow you to add this product as an add-"
 "on."
 msgstr ""
-"Dieses Zusatzprodukt kann nicht zu diesem Basisprodukt hinzugefügt werden."
+"Dieses Programmteil kann nicht zu diesem Basisprodukt hinzugefügt werden."
 
 #: pretix/base/services/orders.py:1529
 msgid "You need to choose a subevent for the new position."
@@ -8852,7 +8852,7 @@ msgstr "Maximale Anzahl von Produkten pro Anmeldung"
 
 #: pretix/base/settings.py:316
 msgid "Add-on products will not be counted."
-msgstr "Zusatzprodukte werden nicht mitgezählt."
+msgstr "Programmteile werden nicht mitgezählt."
 
 #: pretix/base/settings.py:325
 msgid ""
@@ -9656,8 +9656,8 @@ msgid ""
 "If disabled, the event's start and end date will be displayed without the "
 "time of day."
 msgstr ""
-"Wenn diese Einstellung deaktiviert ist, werden Veranstaltungsbeginn und -"
-"ende ohne Uhrzeit angezeigt."
+"Wenn diese Einstellung deaktiviert ist, werden Veranstaltungsbeginn und "
+"-ende ohne Uhrzeit angezeigt."
 
 #: pretix/base/settings.py:1328
 msgid "Hide all products that are sold out"
@@ -9858,7 +9858,7 @@ msgstr ""
 
 #: pretix/base/settings.py:1530
 msgid "Generate tickets for add-on products and bundled products"
-msgstr "Tickets für Zusatzprodukte und enthaltene Produkte generieren"
+msgstr "Tickets für Programmteile und enthaltene Produkte generieren"
 
 #: pretix/base/settings.py:1531
 msgid ""
@@ -9867,9 +9867,9 @@ msgid ""
 "is issued for every add-on product or bundled product as well."
 msgstr ""
 "Standardmäßig werden Tickets nur für einzeln gekaufte Produkte ausgestellt, "
-"nicht für Zusatzprodukte oder enthaltene Produkte. Mit dieser Option wird "
-"auch für Zusatzprodukte oder enthaltene Produkte jeweils ein separates "
-"Ticket ausgestellt."
+"nicht für Programmteile oder enthaltene Produkte. Mit dieser Option wird "
+"auch für Programmteile oder enthaltene Produkte jeweils ein separates Ticket "
+"ausgestellt."
 
 #: pretix/base/settings.py:1544
 msgid "Generate tickets for all products"
@@ -10054,7 +10054,7 @@ msgstr "Kunden können die Variante eines gekauften Produktes wechseln"
 
 #: pretix/base/settings.py:1722
 msgid "Customers can change their selected add-on products"
-msgstr "Kunden können die ausgewählten Zusatzprodukte ändern"
+msgstr "Kunden können die ausgewählten Programmteile ändern"
 
 #: pretix/base/settings.py:1732 pretix/base/settings.py:1743
 msgid ""
@@ -10113,7 +10113,7 @@ msgstr ""
 "Standardmäßig sind Änderungen an der Anmeldung deaktiviert, sobald irgendein "
 "Ticket der Anmeldung eingecheckt wurde. Wenn diese Option gewählt ist, wird "
 "diese Beschränkung aufgehoben. Es ist jedoch nach wie vor nicht möglich, ein "
-"Zusatzprodukt zu stornieren, das bereits einzeln eingecheckt wurde. Bitte "
+"Programmteil zu stornieren, das bereits einzeln eingecheckt wurde. Bitte "
 "nutze diese Option vorsichtig und idealerweise nur in Kombination mit einer "
 "Beschränkung der Preisänderung (siehe oben)."
 
@@ -12634,9 +12634,9 @@ msgid ""
 "must select a specific set of products for this check-in list, only "
 "including the possible add-on products."
 msgstr ""
-"Wenn du erlaubst, Zusatzprodukte mit dem Ticket-Code des Hauptproduktes zu "
+"Wenn du erlaubst, Programmteile mit dem Ticket-Code des Hauptproduktes zu "
 "scannen, musst du eine Auswahl bestimmter Produkte treffen, die nur die "
-"Zusatzprodukte enthält."
+"Programmteile enthält."
 
 #: pretix/control/forms/checkin.py:184
 msgid "Barcode"
@@ -14222,7 +14222,7 @@ msgstr "Wert aus dem Produkt verwenden"
 
 #: pretix/control/forms/item.py:1024
 msgid "Add-ons"
-msgstr "Zusatzprodukte"
+msgstr "Programmteile"
 
 #: pretix/control/forms/item.py:1048
 msgid "You added the same add-on category twice"
@@ -14234,7 +14234,7 @@ msgid ""
 "product if all available add-ons are sold out."
 msgstr ""
 "Bitte beachte, dass die Angabe einer minimalen Anzahl es unmöglich macht, "
-"das Basisprodukt zu kaufen, wenn alle (oder zu viele) Zusatzprodukte "
+"das Basisprodukt zu kaufen, wenn alle (oder zu viele) Programmteile "
 "ausverkauft sind."
 
 #: pretix/control/forms/item.py:1100
@@ -14688,7 +14688,7 @@ msgstr "Feste Stornogebühr pro Ticket einbehalten"
 
 #: pretix/control/forms/orders.py:843
 msgid "Free tickets and add-on products are not counted"
-msgstr "Kostenlose Tickets und Zusatzprodukte werden nicht mitgezählt"
+msgstr "Kostenlose Tickets und Programmteile werden nicht mitgezählt"
 
 #: pretix/control/forms/orders.py:853
 msgid "Keep fees"
@@ -15304,7 +15304,7 @@ msgid ""
 "Position #{posid} created: {item} ({price}) as an add-on to position "
 "#{addon_to}."
 msgstr ""
-"Position #{posid} erstellt: {item} ({price}) als Zusatzprodukt zu Position "
+"Position #{posid} erstellt: {item} ({price}) als Programmteil zu Position "
 "#{addon_to}."
 
 #: pretix/control/logdisplay.py:155
@@ -16101,15 +16101,15 @@ msgstr "Die Variante „{value}“ wurde verändert."
 
 #: pretix/control/logdisplay.py:496
 msgid "An add-on has been added to this product."
-msgstr "Eine Kategorie für Zusatzprodukte wurde zum Produkt hinzugefügt."
+msgstr "Eine Kategorie für Programmteile wurde zum Produkt hinzugefügt."
 
 #: pretix/control/logdisplay.py:497
 msgid "An add-on has been removed from this product."
-msgstr "Eine Kategorie für Zusatzprodukte wurde vom Produkt entfernt."
+msgstr "Eine Kategorie für Programmteile wurde vom Produkt entfernt."
 
 #: pretix/control/logdisplay.py:498
 msgid "An add-on has been changed on this product."
-msgstr "Eine Kategorie für Zusatzprodukte wurde bearbeitet."
+msgstr "Eine Kategorie für Programmteile wurde bearbeitet."
 
 #: pretix/control/logdisplay.py:499
 msgid "A bundled item has been added to this product."
@@ -16438,8 +16438,8 @@ msgstr "Der Check-in von Position #{posid} auf Liste „{list}“ wurde gelösch
 #: pretix/control/logdisplay.py:656
 #, python-brace-format
 msgid ""
-"Position #{posid} has been checked in manually at {datetime} on list "
-"\"{list}\"."
+"Position #{posid} has been checked in manually at {datetime} on list \"{list}"
+"\"."
 msgstr ""
 "Ticket #{posid} wurde am {datetime} manuell auf der Liste „{list}“ "
 "eingecheckt."
@@ -18182,7 +18182,7 @@ msgid ""
 "not to an entirely different product (except for add-on products)."
 msgstr ""
 "Es ist möglich, zu einer anderen Variante des gleichen Produkts zu wechseln, "
-"aber nicht zu einem komplett anderen Produkt (außer für Zusatzprodukte)."
+"aber nicht zu einem komplett anderen Produkt (außer für Programmteile)."
 
 #: pretix/control/templates/pretixcontrol/event/cancel.html:61
 msgid ""
@@ -18207,7 +18207,7 @@ msgid ""
 "If an add-on product is newly added, the system currently does not validate "
 "if there are required questions or fields that need to be filled out."
 msgstr ""
-"Wenn ein Zusatzprodukt neu hinzugefügt wird, prüft das System derzeit nicht, "
+"Wenn ein Programmteil neu hinzugefügt wird, prüft das System derzeit nicht, "
 "ob es zusätzliche Pflichtfelder gibt, die der Kunde ausfüllen müsste."
 
 #: pretix/control/templates/pretixcontrol/event/cancel.html:64
@@ -18216,8 +18216,8 @@ msgid ""
 "product that requires them to use a voucher or membership."
 msgstr ""
 "Kunden können derzeit nicht zu einer Produktvariante wechseln oder ein "
-"Zusatzprodukt auswählen, wenn dieses einen Gutschein oder eine "
-"Mitgliedschaft erfordert."
+"Programmteil auswählen, wenn dieses einen Gutschein oder eine Mitgliedschaft "
+"erfordert."
 
 #: pretix/control/templates/pretixcontrol/event/cancel.html:65
 msgid ""
@@ -19228,7 +19228,7 @@ msgid ""
 "pretix such as hidden products, add-on products or product bundles."
 msgstr ""
 "Die Warteliste ist derzeit mit einigen fortgeschrittenen Funktionen von "
-"pretix wie z. B. versteckten Produkten, Zusatzprodukten oder Produktpaketen "
+"pretix wie z. B. versteckten Produkten, Programmteilen oder Produktpaketen "
 "inkompatibel."
 
 #: pretix/control/templates/pretixcontrol/event/settings.html:359
@@ -20013,10 +20013,10 @@ msgid ""
 "people (e.g. group bundles)."
 msgstr ""
 "Diese Option sollte für die meisten Produkte gewählt werden, die man "
-"üblicherweise als \"Ticket\" bezeichnen würde. Für Zusatzprodukte oder "
+"üblicherweise als \"Ticket\" bezeichnen würde. Für Programmteile oder "
 "enthaltene Produkte sollte diese Option nur für das Haupt-Ticket gewählt "
-"werden, außer wenn es sich bei den Zusatzprodukten oder enthaltenen "
-"Produkten um weitere Personen handelt (z. B. Gruppenpaket)."
+"werden, außer wenn es sich bei den Programmteilen oder enthaltenen Produkten "
+"um weitere Personen handelt (z. B. Gruppenpaket)."
 
 #: pretix/control/templates/pretixcontrol/item/create.html:50
 #: pretix/control/templates/pretixcontrol/item/index.html:58
@@ -20038,8 +20038,8 @@ msgstr ""
 #: pretix/control/templates/pretixcontrol/item/index.html:66
 msgid "Examples: Merchandise, donations, gift cards, add-ons to a main ticket."
 msgstr ""
-"Beispiele: Merchandise, Spenden, Geschenkgutscheine, Zusatzprodukte zum "
-"Haupt-Ticket."
+"Beispiele: Merchandise, Spenden, Geschenkgutscheine, Programmteile zum Haupt-"
+"Ticket."
 
 #: pretix/control/templates/pretixcontrol/item/create.html:68
 #: pretix/control/templates/pretixcontrol/item/index.html:76
@@ -20109,7 +20109,7 @@ msgid ""
 "on with variations for simultaneous workshops."
 msgstr ""
 "Beispiele: Ticketkategorie mit Varianten für \"Regulär\" und \"Ermäßigt\", "
-"Merchandise mit Varianten für verschiedene Größen, Workshop-Zusatzprodukte "
+"Merchandise mit Varianten für verschiedene Größen, Workshop-Programmteile "
 "mit Varianten für simultane Workshops."
 
 #: pretix/control/templates/pretixcontrol/item/create.html:165
@@ -20181,16 +20181,16 @@ msgid ""
 "product. You can also specify the minimum and maximum number of add-ons of "
 "the given category that can or need to be chosen."
 msgstr ""
-"Mit Zusatzprodukten kannst du Produkte angeben, die in Kombination mit "
-"diesem Produkt gekauft werden können. Wenn du beispielsweise eine Konferenz "
-"mit einem Basis-Konferenzticket und einer Reihe von zubuchbaren Workshops "
-"veranstaltest, kannst du die Workshops als Zusatzprodukte zum "
-"Konferenzticket definieren. Mit dieser Einstellung können die Workshops "
-"nicht einzeln, sondern nur in Kombination mit einem Konferenzticket gekauft "
-"werden. Du kannst hier einstellen, welche Produkte als Zusatzprodukte zu "
-"diesem Produkt gekauft werden können. Du kannst ebenfalls eine maximale und "
-"minimale Anzahl von Produkten auswählen, die aus den entsprechenden "
-"Kategorien gewählt werden können."
+"Mit Programmteilen kannst du Produkte angeben, die in Kombination mit diesem "
+"Produkt gekauft werden können. Wenn du beispielsweise eine Konferenz mit "
+"einem Basis-Konferenzticket und einer Reihe von zubuchbaren Workshops "
+"veranstaltest, kannst du die Workshops als Programmteile zum Konferenzticket "
+"definieren. Mit dieser Einstellung können die Workshops nicht einzeln, "
+"sondern nur in Kombination mit einem Konferenzticket gekauft werden. Du "
+"kannst hier einstellen, welche Produkte als Programmteile zu diesem Produkt "
+"gekauft werden können. Du kannst ebenfalls eine maximale und minimale Anzahl "
+"von Produkten auswählen, die aus den entsprechenden Kategorien gewählt "
+"werden können."
 
 #: pretix/control/templates/pretixcontrol/item/include_addons.html:28
 #: pretix/control/templates/pretixcontrol/item/include_addons.html:62
@@ -20560,7 +20560,7 @@ msgstr "Produkt mit Varianten"
 
 #: pretix/control/templates/pretixcontrol/items/index.html:117
 msgid "Only available as an add-on product"
-msgstr "Nur als Zusatzprodukt verfügbar"
+msgstr "Nur als Programmteil verfügbar"
 
 #: pretix/control/templates/pretixcontrol/items/index.html:120
 msgid "Only available as part of a bundle"
@@ -21154,7 +21154,7 @@ msgid ""
 msgstr ""
 "Bitte benutze dieses Werkzeug vorsichtig. Hier vorgenommene Änderungen "
 "können nicht rückgängig gemacht werden. Nicht alle Bedingungen (wie z. B. "
-"verpflichtende Zusatzprodukte) werden von diesem Werkzeug geprüft, es ist "
+"verpflichtende Programmteile) werden von diesem Werkzeug geprüft, es ist "
 "also möglich, eine Anmeldung zu erzeugen, die normal nicht möglich gewesen "
 "wäre. In vielen Fällen ist es einfacher, die Anmeldung komplett zu "
 "stornieren und eine neue Anmeldung aufzugeben."
@@ -21257,8 +21257,8 @@ msgid ""
 "Removing or splitting this position will also remove or split all add-ons to "
 "this position."
 msgstr ""
-"Das Entfernen oder Abspalten dieser Position wird auch alle zugehörigen "
-"Zusatzprodukte entfernen oder abspalten."
+"Das Entfernen oder Abspalten dieser Position werden auch alle zugehörigen "
+"Programmteile entfernt oder abgespalten."
 
 #: pretix/control/templates/pretixcontrol/order/change.html:311
 #: pretix/control/templates/pretixcontrol/order/change.html:352
@@ -26090,8 +26090,8 @@ msgid ""
 "You cannot add add-ons to a product that is only available as an add-on "
 "itself."
 msgstr ""
-"Du kannst keine Zusatzprodukte zu einem Produkt hinzufügen, das selbst nur "
-"als Zusatzprodukt verkauft wird."
+"Du kannst keine Programmteile zu einem Produkt hinzufügen, das selbst nur "
+"als Programmteil verkauft wird."
 
 #: pretix/control/views/item.py:1369
 msgid ""
@@ -26099,7 +26099,7 @@ msgid ""
 "itself."
 msgstr ""
 "Du kannst keine enthaltenen Produkte zu einem Produkt hinzufügen, das selbst "
-"nur als Zusatzprodukt verkauft wird."
+"nur als Programmteil verkauft wird."
 
 #: pretix/control/views/item.py:1501
 msgid ""
@@ -27519,7 +27519,7 @@ msgstr "Anmeldungen mit ausstehender Zahlung mit einschließen"
 
 #: pretix/plugins/badges/exporters.py:449
 msgid "Include add-on or bundled positions"
-msgstr "Zusatzprodukte und enthaltene Produkte mit einschließen"
+msgstr "Programmteile und enthaltene Produkte mit einschließen"
 
 #: pretix/plugins/badges/exporters.py:454
 msgid "Rendering option"
@@ -31338,7 +31338,7 @@ msgstr ""
 #: pretix/presale/checkoutflow.py:486
 msgctxt "checkoutflow"
 msgid "Add-on products"
-msgstr "Zusatzprodukte"
+msgstr "Programmteile"
 
 #: pretix/presale/checkoutflow.py:637 pretix/presale/checkoutflow.py:645
 #: pretix/presale/views/cart.py:183 pretix/presale/views/cart.py:188
@@ -31717,16 +31717,16 @@ msgid ""
 "For some of the products in your cart, you can choose additional options "
 "before you continue."
 msgstr ""
-"Für manche Produkte in deinem Warenkorb kannst du Zusatzprodukte auswählen, "
+"Für manche Produkte in deinem Warenkorb kannst du Programmteile auswählen, "
 "bevor du fortfährst."
 
 #: pretix/presale/templates/pretixpresale/event/checkout_addons.html:13
 msgid "We're now trying to book these add-ons for you!"
-msgstr "Wir versuchen nun, diese Zusatzprodukte für dich zu buchen!"
+msgstr "Wir versuchen nun, diese Programmteile für dich zu buchen!"
 
 #: pretix/presale/templates/pretixpresale/event/checkout_addons.html:20
 msgid "Add-ons:"
-msgstr "Zusatzprodukte:"
+msgstr "Programmteile:"
 
 #: pretix/presale/templates/pretixpresale/event/checkout_addons.html:53
 #: pretix/presale/templates/pretixpresale/event/checkout_confirm.html:201
@@ -31919,7 +31919,7 @@ msgstr ""
 #: pretix/presale/templates/pretixpresale/event/checkout_membership.html:37
 #: pretix/presale/templates/pretixpresale/event/checkout_questions.html:114
 msgid "Selected add-ons"
-msgstr "Gewählte Zusatzprodukte"
+msgstr "Gewählte Programmteile"
 
 #: pretix/presale/templates/pretixpresale/event/checkout_membership.html:68
 msgid ""
@@ -32097,7 +32097,7 @@ msgstr "Minimale Bestellmenge: %(num)s"
 #: pretix/presale/templates/pretixpresale/event/voucher.html:341
 msgctxt "price"
 msgid "free"
-msgstr "gratis"
+msgstr "kostenlos"
 
 #: pretix/presale/templates/pretixpresale/event/fragment_addon_choice.html:77
 #: pretix/presale/templates/pretixpresale/event/fragment_product_list.html:54
@@ -32262,7 +32262,7 @@ msgstr "Anzahl an %(item)s zur Anmeldung"
 
 #: pretix/presale/templates/pretixpresale/event/fragment_addon_choice.html:375
 msgid "There are no add-ons available for this product."
-msgstr "Es sind keine Zusatzprodukte für dieses Produkt verfügbar."
+msgstr "Es sind keine Programmteile für dieses Produkt verfügbar."
 
 #: pretix/presale/templates/pretixpresale/event/fragment_availability.html:6
 msgid "Enter a voucher code below to buy this product."
@@ -35009,8 +35009,8 @@ msgstr "Kosovo"
 #~ "has already been paid by other means. Please double check and refund the "
 #~ "money via PayPal's interface."
 #~ msgstr ""
-#~ "Die PayPal-Transaktion %(payment)s war erfolgreich, aber die Bestellung "
-#~ "%(order)s wurde bereits mit einer anderen Methode bezahlt. Bitte "
+#~ "Die PayPal-Transaktion %(payment)s war erfolgreich, aber die Bestellung %"
+#~ "(order)s wurde bereits mit einer anderen Methode bezahlt. Bitte "
 #~ "kontaktiere Sie den Kunden und überweise das Geld über PayPals Oberfläche "
 #~ "zurück."
 
@@ -35020,8 +35020,8 @@ msgstr "Kosovo"
 #~ "payment could not be accepted. Please contact the user and refund the "
 #~ "money via PayPal's interface."
 #~ msgstr ""
-#~ "Die PayPal-Transaktion %(payment)s war erfolgreich, aber die Bestellung "
-#~ "%(order)s war abgelaufen und das Produkt wurde während der Transaktion "
+#~ "Die PayPal-Transaktion %(payment)s war erfolgreich, aber die Bestellung %"
+#~ "(order)s war abgelaufen und das Produkt wurde während der Transaktion "
 #~ "ausverkauft. Die Zahlung konnte daher nicht akzeptiert werden. Bitte "
 #~ "kontaktiere den Kunden und überweise das Geld über PayPals Oberfläche "
 #~ "zurück."
@@ -35058,8 +35058,8 @@ msgstr "Kosovo"
 
 #~ msgid ""
 #~ "Stripe reported that the transaction <a %(stripe_href)s>%(charge)s</a> "
-#~ "has been refunded. Do you want to refund mark the matching order "
-#~ "(%(order)s) as refunded?"
+#~ "has been refunded. Do you want to refund mark the matching order (%"
+#~ "(order)s) as refunded?"
 #~ msgstr ""
 #~ "Stripe hat gemeldet, dass die Zahlung <a %(stripe_href)s>%(charge)s</a> "
 #~ "erstattet oder storniert wurde. Soll die passende Bestellung (%(order)s) "
@@ -35595,8 +35595,8 @@ msgstr "Kosovo"
 #~ "pretixdesk will be supported through this menu."
 #~ msgstr ""
 #~ "Bitte beachte, dass dies eine neue Funktion ist, die aktuell nur für "
-#~ "Software im Teststadium, wie z.B. pretixPOS, funktioniert. pretixdroid 1."
-#~ "x und pretixdesk 0.x werden von dieser Funktion nicht unterstützt. "
+#~ "Software im Teststadium, wie z.B. pretixPOS, funktioniert. pretixdroid "
+#~ "1.x und pretixdesk 0.x werden von dieser Funktion nicht unterstützt. "
 #~ "Zukünftige Versionen von pretixdroid und pretixdesk werden in diesem Menü "
 #~ "unterstützt werden."
 
@@ -36578,8 +36578,8 @@ msgstr "Kosovo"
 #~ "Hallo,\n"
 #~ "\n"
 #~ "wir haben IhredeineBestellung für %(event)s mit einem Gesamtbetrag von\n"
-#~ "%(total)s %(currency)s erhalten. Bitte schließe die Bezahlung bis "
-#~ "%(date)s ab.\n"
+#~ "%(total)s %(currency)s erhalten. Bitte schließe die Bezahlung bis %"
+#~ "(date)s ab.\n"
 #~ "%(payment_info)s\n"
 #~ "\n"
 #~ "Du kannst deine Bestellung unter folgender Adresse einsehen und ändern:\n"
